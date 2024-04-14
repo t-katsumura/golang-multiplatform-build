@@ -56,14 +56,14 @@ jobs:
         arch:
           - linux/amd64
           - linux/arm64
-          # - linux/riscv64 # Not supported by go official image.
+          # - linux/riscv64  # Not supported by go official image.
           - linux/ppc64le
           - linux/s390x
-          # - linux/386 # Runtime error occurs.
+          # - linux/386      # Runtime error occurs.
           # - linux/mips64le # Runtime error occurs.
-          # - linux/mips64 # Not supported by go official image.
+          # - linux/mips64   # Not supported by go official image.
           - linux/arm/v7
-          # - linux/arm/v6 # Not supported by go official image.
+          # - linux/arm/v6   # Not supported by go official image.
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
