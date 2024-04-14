@@ -31,4 +31,6 @@ jobs:
           brew install docker
           colima start
       - name: Docker run
-        run: docker run --rm  "golang:latest" uname -r
+        run: |
+          docker pull  "golang:latest"
+          docker run --rm  "golang:latest" go --version
