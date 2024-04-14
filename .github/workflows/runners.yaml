@@ -1,0 +1,23 @@
+name: Runners
+
+on: push
+
+jobs:
+  unit:
+    name: Runners
+    runs-on: ${{ matrix.os }}-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        os:
+          - ubuntu
+          - windows
+          - macos
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          check-latest: true
+          go-version-file: ./go.mod
+      - run: go run ./...

@@ -1,0 +1,31 @@
+name: QEMU
+
+on: push
+
+jobs:
+  unit:
+    name: QEMU
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        arch:
+          - docker: amd64
+          - docker: arm64
+          - docker: riscv64
+          - docker: ppc64le
+          - docker: s390x
+          - docker: 386
+          - docker: arm/v7
+          - docker: arm/v6
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ matrix.arch }}
+      - uses: actions/setup-go@v5
+        with:
+          check-latest: true
+          go-version-file: ./go.mod
+      - run: go run ./...
