@@ -14,14 +14,14 @@ jobs:
           # https://hub.docker.com/_/golang/tags
           - linux/amd64
           - linux/arm64
-          # - linux/riscv64
+          # - linux/riscv64 # Not supported by go official image.
           - linux/ppc64le
           - linux/s390x
-          ## - linux/386
-          ## - linux/mips64le
-          # - linux/mips64
+          # - linux/386 # Runtime error occurs.
+          # - linux/mips64le # Runtime error occurs.
+          # - linux/mips64 # Not supported by go official image.
           - linux/arm/v7
-          # - linux/arm/v6
+          # - linux/arm/v6 # Not supported by go official image.
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
@@ -34,5 +34,5 @@ jobs:
             --rm \
             -v $(pwd):/${{ github.workspace }} \
             --platform ${{ matrix.arch }} \
-            golang:1.22.0 \
+            golang:1.22.2 \
             bash -c "go run /${{ github.workspace }}/main.go"
