@@ -24,8 +24,11 @@ jobs:
       - uses: docker/setup-qemu-action@v3
         with:
           platforms: ${{ matrix.arch }}
-      - uses: actions/setup-go@v5
-        with:
-          check-latest: true
-          go-version-file: ./go.mod
-      - run: go run ./...
+      - name: Docker run
+        run: |
+          docker run \
+            --rm \
+            -v $(pwd):/${{ github.workspace }} \
+            --platform ${{ matrix.arch }} \
+            golang:latest \
+            bash -c "go run /${{ github.workspace }}/main.go"
