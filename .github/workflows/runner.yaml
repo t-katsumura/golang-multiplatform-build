@@ -25,9 +25,4 @@ jobs:
       # Additional example to run with docker.
       - uses: docker-practice/actions-setup-docker@master
       - name: Docker run
-        run: |
-          docker run \
-            --rm \
-            -v $(pwd):/${{ github.workspace }} \
-            golang:1.22.2 \
-            bash -c "go run /${{ github.workspace }}/main.go"
+        run: docker run --rm -v $(pwd):/${{ github.workspace }} golang:1.22.2 bash -c "go run /${{ github.workspace }}/main.go"
