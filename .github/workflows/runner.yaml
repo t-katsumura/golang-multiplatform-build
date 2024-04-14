@@ -33,4 +33,4 @@ jobs:
       - name: Docker run
         run: |
           docker pull  "golang:latest"
-          docker run --rm  "golang:latest" go --version
+          docker run --rm  "golang:latest" go version
