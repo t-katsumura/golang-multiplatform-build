@@ -1,8 +1,8 @@
-# golang-multiplatform
+# Golang Multiplatform Build with GitHub Actions
 
 Build test of golang application on multiple platforms.
 
-## With github runner
+## Using github hosted runner
 
 Example workflow at [.github/workflows/runner.yaml](.github/workflows/runner.yaml).
 
@@ -32,7 +32,7 @@ jobs:
       - run: go run ./...
 ```
 
-## With QEMU emulator
+## Using QEMU emulator
 
 Example workflow at [.github/workflows/qemu.yaml](.github/workflows/qemu.yaml).
 
