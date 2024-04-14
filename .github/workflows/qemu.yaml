@@ -34,5 +34,5 @@ jobs:
             --rm \
             -v $(pwd):/${{ github.workspace }} \
             --platform ${{ matrix.arch }} \
-            golang:latest \
+            golang:1.22.0 \
             bash -c "go run /${{ github.workspace }}/main.go"
