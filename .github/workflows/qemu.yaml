@@ -10,14 +10,14 @@ jobs:
     strategy:
       matrix:
         arch:
-          - docker: linux/amd64
-          - docker: linux/arm64
-          - docker: linux/riscv64
-          - docker: linux/ppc64le
-          - docker: linux/s390x
-          - docker: linux/386
-          - docker: linux/arm/v7
-          - docker: linux/arm/v6
+          - linux/amd64
+          - linux/arm64
+          - linux/riscv64
+          - linux/ppc64le
+          - linux/s390x
+          - linux/386
+          - linux/arm/v7
+          - linux/arm/v6
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
