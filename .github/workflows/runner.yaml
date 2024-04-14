@@ -25,5 +25,7 @@ jobs:
 
       # Docker is available on linux and windows by default.
       # But not on macos.
+      - name: Install docker if macos
+        run: test $(go env GOOS) = "darwin" &&  brew install docker
       - name: Docker run
         run: docker run --rm  "golang:latest" uname -r
