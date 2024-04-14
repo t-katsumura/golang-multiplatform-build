@@ -6,7 +6,7 @@ jobs:
   unit:
     name: QEMU
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     strategy:
       matrix:
         arch:
@@ -33,4 +33,4 @@ jobs:
             -v $(pwd):/${{ github.workspace }} \
             --platform ${{ matrix.arch }} \
             golang:1.22.2 \
-            bash -c "go run /${{ github.workspace }}/main.go"
+            bash -c "CGO_ENABLED=0 go run /${{ github.workspace }}/main.go"

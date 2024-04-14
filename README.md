@@ -15,7 +15,7 @@ jobs:
   unit:
     name: Runner
     runs-on: ${{ matrix.os }}-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     strategy:
       matrix:
         os:
@@ -50,7 +50,7 @@ jobs:
   unit:
     name: QEMU
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     strategy:
       matrix:
         arch:
