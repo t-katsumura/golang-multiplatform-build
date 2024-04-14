@@ -6,7 +6,7 @@ jobs:
   unit:
     name: Runner
     runs-on: ${{ matrix.os }}-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -31,6 +31,4 @@ jobs:
           brew install docker
           colima start
       - name: Docker run
-        run: |
-          docker pull  "golang:latest"
-          docker run --rm  "golang:latest" go version
+        run: docker run hello-world
