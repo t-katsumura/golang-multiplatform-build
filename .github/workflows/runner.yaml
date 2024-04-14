@@ -25,4 +25,4 @@ jobs:
       # Additional example to run with docker.
       - uses: docker-practice/actions-setup-docker@master
       - name: Docker run
-        run: docker run --rm -v "$(pwd):/app golang:1.22.2" bash -c "go run /app/main.go"
+        run: docker run --rm -v "$(pwd):/app" "golang:1.22.2" bash -c "go run /app/main.go"
