@@ -9,7 +9,7 @@ Example workflow at [.github/workflows/runner.yaml](.github/workflows/runner.yam
 ```yaml
 name: Runner
 
-on: push
+on: [push, workflow_dispatch]
 
 jobs:
   unit:
@@ -44,7 +44,7 @@ Available architectures are listed below.
 ```yaml
 name: QEMU
 
-on: push
+on: [push, workflow_dispatch]
 
 jobs:
   unit:
