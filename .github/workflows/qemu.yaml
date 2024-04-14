@@ -10,8 +10,6 @@ jobs:
     strategy:
       matrix:
         arch:
-          # https://github.com/docker/setup-qemu-action
-          # https://hub.docker.com/_/golang/tags
           - linux/amd64
           - linux/arm64
           # - linux/riscv64 # Not supported by go official image.

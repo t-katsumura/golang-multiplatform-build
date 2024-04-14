@@ -1,10 +1,10 @@
-name: Runners
+name: Runner
 
 on: push
 
 jobs:
   unit:
-    name: Runners
+    name: Runner
     runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 30
     strategy:
