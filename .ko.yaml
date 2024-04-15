@@ -1,0 +1,25 @@
+defaultBaseImage: gcr.io/distroless/static:debug
+
+defaultPlatforms:
+  - linux/amd64
+  - linux/arm
+  - linux/arm64
+  - linux/ppc64le
+  - linux/s390x
+
+builds:
+  - id: ko
+    dir: .
+    main: ./
+    env:
+      - GO111MODULE=on
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+      - -tags
+      - netgo
+    ldflags:
+      - -w
+      - -s
+      - -extldflags "-static"
+      - -X main.version={{ .Env.VERSION }}

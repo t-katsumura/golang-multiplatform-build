@@ -14,25 +14,25 @@ jobs:
       matrix:
         os:
           - linux
-          # - windows
-          # - darwin
-          # - freebsd
-          # - openbsd
-          # - netbsd
+          - windows
+          - darwin
+          - freebsd
+          - openbsd
+          - netbsd
         arch:
           - 386
           - amd64
           - arm
           - arm64
-        # include:
-        #   - os: linux
-        #     arch: ppc64
-        #   - os: linux
-        #     arch: ppc64le
-        #   - os: linux
-        #     arch: riscv64
-        #   - os: linux
-        #     arch: s390x
+        include:
+          - os: linux
+            arch: ppc64
+          - os: linux
+            arch: ppc64le
+          - os: linux
+            arch: riscv64
+          - os: linux
+            arch: s390x
         exclude:
           - os: darwin
             arch: 386
@@ -50,6 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    # builder_go_slsa3.yml@v1.10.0 uses upload-artifact@v3
+    # So, we have to use v3 to download artifact.
+    # See https://github.com/slsa-framework/slsa-github-generator/blob/main/internal/builders/go/README.md
     - uses: actions/download-artifact@v3
-    - name: Display structure of downloaded files
-      run: ls -R
+    - run: ls -R

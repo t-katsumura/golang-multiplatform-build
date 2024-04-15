@@ -1,0 +1,29 @@
+name: Container
+
+on: push
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_REGISTRY: ghcr.io
+  IMAGE_NAME: hello
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          check-latest: true
+          go-version-file: ./go.mod
+      - uses: ko-build/setup-ko@v0.6
+      - run: |
+          export VERSION=v0.0.0
+          ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
+          cat .digest
