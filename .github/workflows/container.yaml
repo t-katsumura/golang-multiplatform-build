@@ -19,7 +19,11 @@ jobs:
     timeout-minutes: 15
     outputs:
       image: ${{ steps.build.outputs.image }}
-      digest: ${{ steps.build.outputs.digest }}
+      digest1: ${{ steps.build.outputs.digest1 }}
+      digest2: ${{ steps.build.outputs.digest2 }}
+      digest3: ${{ steps.build.outputs.digest3 }}
+      digest4: ${{ steps.build.outputs.digest4 }}
+      digest5: ${{ steps.build.outputs.digest5 }}
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
