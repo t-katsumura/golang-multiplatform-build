@@ -1,10 +1,10 @@
 version: 1
 
-goos: linux
-goarch: arm64
+goos: darwin
+goarch: amd64
 
-main: ./cmd/aileron/
-binary: aileron-{{ .Os }}-{{ .Arch }}
+main: ./
+binary: main-{{ .Os }}-{{ .Arch }}
 
 env:
   - GO111MODULE=on

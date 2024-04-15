@@ -1,10 +1,10 @@
 version: 1
 
-goos: windows
-goarch: {{ .Env.ARCH }}
+goos: linux
+goarch: ppc64
 
 main: ./
-binary: main-{{ .Os }}-{{ .Arch }}.exe
+binary: main-{{ .Os }}-{{ .Arch }}
 
 env:
   - GO111MODULE=on
@@ -17,5 +17,5 @@ flags:
 ldflags:
   - "-w"
   - "-s"
-  - '-extldflags "-static"'
+  - "-extldflags \"-static\""
   - "-X main.version={{ .Env.VERSION }}"

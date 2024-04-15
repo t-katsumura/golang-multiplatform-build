@@ -32,6 +32,6 @@ jobs:
             arch: [386, arm, ppc64, ppc64le, riscv64, s390x]
     with:
       go-version-file: ./go.mod
-      config-file: .github/targets/${{matrix.os}}.yml
-      evaluated-envs: "VERSION:v0.0.0, ARCH:${{matrix.arch}}"
+      config-file: .github/targets/${{matrix.os}}-${{matrix.arch}}.yml
+      evaluated-envs: "VERSION:v0.0.0"
       draft-release: true

@@ -1,10 +1,10 @@
 version: 1
 
 goos: linux
-goarch: amd64
+goarch: s390x
 
-main: ./cmd/aileron/
-binary: aileron-{{ .Os }}-{{ .Arch }}
+main: ./
+binary: main-{{ .Os }}-{{ .Arch }}
 
 env:
   - GO111MODULE=on

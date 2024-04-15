@@ -1,0 +1,21 @@
+version: 1
+
+goos: windows
+goarch: arm
+
+main: ./
+binary: main-{{ .Os }}-{{ .Arch }}.exe
+
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+
+flags:
+  - -trimpath
+  - -tags=netgo
+
+ldflags:
+  - "-w"
+  - "-s"
+  - "-extldflags \"-static\""
+  - "-X main.version={{ .Env.VERSION }}"

@@ -1,10 +1,10 @@
 version: 1
 
-goos: windows
-goarch: arm64
+goos: linux
+goarch: arm
 
-main: ./cmd/aileron/
-binary: aileron-{{ .Os }}-{{ .Arch }}.exe
+main: ./
+binary: main-{{ .Os }}-{{ .Arch }}
 
 env:
   - GO111MODULE=on

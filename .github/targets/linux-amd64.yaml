@@ -1,7 +1,7 @@
 version: 1
 
-goos: darwin
-goarch: {{ .Env.ARCH }}
+goos: linux
+goarch: amd64
 
 main: ./
 binary: main-{{ .Os }}-{{ .Arch }}
