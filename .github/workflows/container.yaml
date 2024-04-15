@@ -33,13 +33,8 @@ jobs:
           check-latest: true
           go-version-file: ./go.mod
       - uses: ko-build/setup-ko@v0.6
-      - env:
-          KO_DOCKER_REPO: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
-          KO_USER: ${{ github.actor }}
-          KO_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+      - run: |
           export VERSION=v0.0.0
-          echo "${KO_PASSWORD}" | ko login ghcr.io --username "$KO_USER" --password-stdin
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
           
           # Build & push the image. Save the image name.
