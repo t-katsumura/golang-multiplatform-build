@@ -79,3 +79,61 @@ jobs:
             golang:1.22.2 \
             bash -c "go run /${{ github.workspace }}/main.go"
 ```
+
+## Using SLSA releaser
+
+Example workflow at [.github/workflows/slsa.yaml](.github/workflows/slsa.yaml).
+
+This workflow uses [slsa-github-generator](https://github.com/slsa-framework/slsa-github-generator/tree/main/internal/builders/go).
+
+Versions are fixed here. Tag names should be used there.
+
+```yaml
+name: SLSA
+
+on: push
+
+permissions:
+  id-token: write
+  contents: write
+  actions: read
+
+jobs:
+  build:
+    uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v1.10.0
+    strategy:
+      matrix:
+        os:
+          - linux
+          - windows
+          - darwin
+          - freebsd
+          - openbsd
+          - netbsd
+        arch:
+          - 386
+          - amd64
+          - arm
+          - arm64
+        include:
+          - os: linux
+            arch: ppc64
+          - os: linux
+            arch: ppc64le
+          - os: linux
+            arch: riscv64
+          - os: linux
+            arch: s390x
+        exclude:
+          - os: darwin
+            arch: 386
+          - os: darwin
+            arch: arm
+    with:
+      go-version-file: ./go.mod
+      config-file: .github/targets/${{matrix.os}}-${{matrix.arch}}.yaml
+      evaluated-envs: "VERSION:v0.0.0"
+      draft-release: true
+      upload-assets: true
+      upload-tag-name: v0.0.0
+```
