@@ -5,7 +5,7 @@ on: push
 permissions:
   contents: read
   packages: write
-  actions: read
+  actions: write
   id-token: write
 
 env:
