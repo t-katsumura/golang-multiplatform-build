@@ -11,8 +11,8 @@ env:
   IMAGE_NAME: hello
 
 jobs:
-  publish:
-    name: Publish
+  build:
+    name: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -26,4 +26,29 @@ jobs:
       - run: |
           export VERSION=v0.0.0
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
-          cat .digest
+      - run: cat .digest
+
+  # provenance:
+  #   needs: build
+  #   uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.10.0
+  #   permissions:
+  #     actions: read
+  #     id-token: write
+  #     # contents: read
+  #     packages: write
+  #   strategy:
+  #     matrix:
+  #       digest:
+  #         - digest
+  #         - 
+  #         - 
+  #         - 
+  #         - 
+  #         - 
+  #   with:
+  #     image: ${{ needs.build.outputs.image }}
+  #     digest: ${{ needs.build.outputs.digest }}
+  #     registry-username: ${{ github.actor }}
+  #     compile-generator: true
+  #   secrets:
+  #     registry-password: ${{ secrets.GITHUB_TOKEN }}
