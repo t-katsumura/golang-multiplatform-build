@@ -24,15 +24,15 @@ jobs:
           - amd64
           - arm
           - arm64
-        include:
-          - os: linux
-            arch: ppc64
-          - os: linux
-            arch: ppc64le
-          - os: linux
-            arch: riscv64
-          - os: linux
-            arch: s390x
+        # include:
+        #   - os: linux
+        #     arch: ppc64
+        #   - os: linux
+        #     arch: ppc64le
+        #   - os: linux
+        #     arch: riscv64
+        #   - os: linux
+        #     arch: s390x
         exclude:
           - os: darwin
             arch: 386
@@ -51,7 +51,5 @@ jobs:
     needs: build
     steps:
     - uses: actions/download-artifact@v4
-      with:
-        name: "${{ env.BUILDER_BINARY }}-${{ needs.build.rng.outputs.value }}"
     - name: Display structure of downloaded files
       run: ls -R
