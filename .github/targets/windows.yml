@@ -3,8 +3,8 @@ version: 1
 goos: windows
 goarch: {{ .Env.ARCH }}
 
-main: ./cmd/aileron/
-binary: aileron-{{ .Os }}-{{ .Arch }}.exe
+main: ./
+binary: main-{{ .Os }}-{{ .Arch }}.exe
 
 env:
   - GO111MODULE=on
