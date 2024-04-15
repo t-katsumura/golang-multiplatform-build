@@ -27,9 +27,25 @@ jobs:
           - s390x
         exclude:
           - os: windows
-            arch: [ppc64, ppc64le, riscv64, s390x]
+            arch: ppc64
+          - os: windows
+            arch: ppc64le
+          - os: windows
+            arch: riscv64
+          - os: windows
+            arch: s390x
           - os: darwin
-            arch: [386, arm, ppc64, ppc64le, riscv64, s390x]
+            arch: 386
+          - os: darwin
+            arch: arm
+          - os: darwin
+            arch: ppc64
+          - os: darwin
+            arch: ppc64le
+          - os: darwin
+            arch: riscv64
+          - os: darwin
+            arch: s390x
     with:
       go-version-file: ./go.mod
       config-file: .github/targets/${{matrix.os}}-${{matrix.arch}}.yml
