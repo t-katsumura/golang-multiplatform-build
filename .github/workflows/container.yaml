@@ -20,11 +20,6 @@ jobs:
     outputs:
       image: ${{ steps.build.outputs.image }}
       digest: ${{ steps.build.outputs.digest }}
-      digest1: ${{ steps.build.outputs.digest1 }}
-      digest2: ${{ steps.build.outputs.digest2 }}
-      digest3: ${{ steps.build.outputs.digest3 }}
-      digest4: ${{ steps.build.outputs.digest4 }}
-      digest5: ${{ steps.build.outputs.digest5 }}
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
@@ -33,38 +28,14 @@ jobs:
           check-latest: true
           go-version-file: ./go.mod
       - uses: ko-build/setup-ko@v0.6
-      - id: build
+      - id: build # id cannot be omitted.
         run: |
           export VERSION=v0.0.0
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
-          
-          # Build & push the image. Save the image name.
-          image_and_digest=$(head -n 1 .digest)
-
           image=$(sed '1q;d' .digest | cut -d'@' -f1 | cut -d':' -f1)
           digest=$(sed '1q;d' .digest | cut -d'@' -f2)
-          digest1=$(sed '2q;d' .digest | cut -d'@' -f2)
-          digest2=$(sed '3q;d' .digest | cut -d'@' -f2)
-          digest3=$(sed '4q;d' .digest | cut -d'@' -f2)
-          digest4=$(sed '5q;d' .digest | cut -d'@' -f2)
-          digest5=$(sed '6q;d' .digest | cut -d'@' -f2)
-
-          echo "image=$image" 
-          echo "digest=$digest"
-          echo "digest1=$digest1"
-          echo "digest2=$digest2"
-          echo "digest3=$digest3"
-          echo "digest4=$digest4"
-          echo "digest5=$digest5"
-
           echo "image=$image" >> "$GITHUB_OUTPUT"
           echo "digest=$digest" >> "$GITHUB_OUTPUT"
-          echo "digest1=$digest1" >> "$GITHUB_OUTPUT"
-          echo "digest2=$digest2" >> "$GITHUB_OUTPUT"
-          echo "digest3=$digest3" >> "$GITHUB_OUTPUT"
-          echo "digest4=$digest4" >> "$GITHUB_OUTPUT"
-          echo "digest5=$digest5" >> "$GITHUB_OUTPUT"
-
       - run: cat .digest
 
   provenance:
