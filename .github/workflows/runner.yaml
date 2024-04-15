@@ -23,6 +23,7 @@ jobs:
           go-version-file: ./go.mod
       - run: go run ./...
 
+      # Running docker example.
       # Docker is available on linux and windows by default.
       # But not on macos.
       - name: Setup docker (missing on MacOS)
@@ -31,7 +32,4 @@ jobs:
           brew install docker
           colima start
       - name: Docker run
-        run: |
-          docker run --rm hello-world
-          docker run -d redis:7.2.4
-          docker ps
+        run: docker run --rm hello-world
