@@ -1,7 +1,7 @@
 version: 1
 
 goos: darwin
-goarch: {{ .Env.Arch }}
+goarch: {{ .Env.ARCH }}
 
 main: ./cmd/aileron/
 binary: aileron-{{ .Os }}-{{ .Arch }}
