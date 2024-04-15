@@ -27,27 +27,56 @@ jobs:
           - s390x
         exclude:
           - os: windows
-            arch: ppc64
-          - os: windows
-            arch: ppc64le
-          - os: windows
-            arch: riscv64
-          - os: windows
-            arch: s390x
+            arch: [ppc64, ppc64le, riscv64, s390x]
           - os: darwin
-            arch: 386
-          - os: darwin
-            arch: arm
-          - os: darwin
-            arch: ppc64
-          - os: darwin
-            arch: ppc64le
-          - os: darwin
-            arch: riscv64
-          - os: darwin
-            arch: s390x
+            arch: [386, arm, ppc64, ppc64le, riscv64, s390x]
     with:
       go-version-file: ./go.mod
-      config-file: .github/targets/${{matrix.os}}-${{matrix.arch}}.yml
+      config-file: .github/targets/${{matrix.os}}-${{matrix.arch}}.yaml
       evaluated-envs: "VERSION:v0.0.0"
       draft-release: true
+
+
+  # build:
+  #   uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v1.10.0
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - linux
+  #         - windows
+  #         - darwin
+  #       arch:
+  #         - 386
+  #         - amd64
+  #         - arm
+  #         - arm64
+  #         - ppc64
+  #         - ppc64le
+  #         - riscv64
+  #         - s390x
+  #       exclude:
+  #         - os: windows
+  #           arch: ppc64
+  #         - os: windows
+  #           arch: ppc64le
+  #         - os: windows
+  #           arch: riscv64
+  #         - os: windows
+  #           arch: s390x
+  #         - os: darwin
+  #           arch: 386
+  #         - os: darwin
+  #           arch: arm
+  #         - os: darwin
+  #           arch: ppc64
+  #         - os: darwin
+  #           arch: ppc64le
+  #         - os: darwin
+  #           arch: riscv64
+  #         - os: darwin
+  #           arch: s390x
+  #   with:
+  #     go-version-file: ./go.mod
+  #     config-file: .github/targets/${{matrix.os}}-${{matrix.arch}}.yml
+  #     evaluated-envs: "VERSION:v0.0.0"
+  #     draft-release: true
