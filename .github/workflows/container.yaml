@@ -33,7 +33,8 @@ jobs:
           check-latest: true
           go-version-file: ./go.mod
       - uses: ko-build/setup-ko@v0.6
-      - run: |
+      - id: build
+        run: |
           export VERSION=v0.0.0
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
           
