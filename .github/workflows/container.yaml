@@ -5,6 +5,8 @@ on: push
 permissions:
   contents: read
   packages: write
+  actions: read
+  id-token: write
 
 env:
   IMAGE_REGISTRY: ghcr.io
@@ -63,22 +65,9 @@ jobs:
   provenance:
     needs: build
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.10.0
-    permissions:
-      actions: read
-      id-token: write
-      # contents: read
-      packages: write
-    strategy:
-      matrix:
-        digest:
-          - digest1
-          - digest2
-          - digest3
-          - digest4
-          - digest5
     with:
       image: ${{ needs.build.outputs.image }}
-      digest: ${{ needs.build.outputs.${{matrix.digest}} }}
+      digest: ${{ needs.build.outputs.digest1 }}
       registry-username: ${{ github.actor }}
       compile-generator: true
     secrets:
