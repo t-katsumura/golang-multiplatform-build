@@ -15,6 +15,9 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      image: ${{ steps.build.outputs.image }}
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
@@ -26,29 +29,31 @@ jobs:
       - run: |
           export VERSION=v0.0.0
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
+          
+          # Build & push the image. Save the image name.
+          image_and_digest=$(head -n 1 .digest)
+
+          # Output the image name and digest so we can generate provenance.
+          image=$(echo "${image_and_digest}" | cut -d'@' -f1)
+          digest=$(echo "${image_and_digest}" | cut -d'@' -f2)
+          echo "image=$image" 
+          echo "digest=$digest"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
       - run: cat .digest
 
-  # provenance:
-  #   needs: build
-  #   uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.10.0
-  #   permissions:
-  #     actions: read
-  #     id-token: write
-  #     # contents: read
-  #     packages: write
-  #   strategy:
-  #     matrix:
-  #       digest:
-  #         - digest
-  #         - 
-  #         - 
-  #         - 
-  #         - 
-  #         - 
-  #   with:
-  #     image: ${{ needs.build.outputs.image }}
-  #     digest: ${{ needs.build.outputs.digest }}
-  #     registry-username: ${{ github.actor }}
-  #     compile-generator: true
-  #   secrets:
-  #     registry-password: ${{ secrets.GITHUB_TOKEN }}
+  provenance:
+    needs: build
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.10.0
+    permissions:
+      actions: read
+      id-token: write
+      # contents: read
+      packages: write
+    with:
+      image: ${{ needs.build.outputs.image }}
+      digest: ${{ needs.build.outputs.digest }}
+      registry-username: ${{ github.actor }}
+      compile-generator: true
+    secrets:
+      registry-password: ${{ secrets.GITHUB_TOKEN }}
