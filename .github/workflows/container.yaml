@@ -17,8 +17,13 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      KO_DOCKER_REPO: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
+      KO_USER: ${{ github.actor }}
+      KO_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
     outputs:
       image: ${{ steps.build.outputs.image }}
+      digest: ${{ steps.build.outputs.digest }}
       digest1: ${{ steps.build.outputs.digest1 }}
       digest2: ${{ steps.build.outputs.digest2 }}
       digest3: ${{ steps.build.outputs.digest3 }}
@@ -34,12 +39,14 @@ jobs:
       - uses: ko-build/setup-ko@v0.6
       - run: |
           export VERSION=v0.0.0
+          echo "${KO_PASSWORD}" | ko login ghcr.io --username "$KO_USER" --password-stdin
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
           
           # Build & push the image. Save the image name.
           image_and_digest=$(head -n 1 .digest)
 
-          image=$(sed '1q;d' .digest | cut -d'@' -f1)
+          image=$(sed '1q;d' .digest | cut -d'@' -f1 | cut -d':' -f1)
+          digest=$(sed '1q;d' .digest | cut -d'@' -f2)
           digest1=$(sed '2q;d' .digest | cut -d'@' -f2)
           digest2=$(sed '3q;d' .digest | cut -d'@' -f2)
           digest3=$(sed '4q;d' .digest | cut -d'@' -f2)
@@ -58,6 +65,7 @@ jobs:
           echo "digest5=$digest5"
 
           echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
           echo "digest1=$digest1" >> "$GITHUB_OUTPUT"
           echo "digest2=$digest2" >> "$GITHUB_OUTPUT"
           echo "digest3=$digest3" >> "$GITHUB_OUTPUT"
@@ -71,7 +79,7 @@ jobs:
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.10.0
     with:
       image: ${{ needs.build.outputs.image }}
-      digest: ${{ needs.build.outputs.digest1 }}
+      digest: ${{ needs.build.outputs.digest }}
       registry-username: ${{ github.actor }}
       compile-generator: true
     secrets:
