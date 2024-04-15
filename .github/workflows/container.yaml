@@ -17,10 +17,6 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      KO_DOCKER_REPO: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
-      KO_USER: ${{ github.actor }}
-      KO_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
     outputs:
       image: ${{ steps.build.outputs.image }}
       digest: ${{ steps.build.outputs.digest }}
@@ -37,7 +33,11 @@ jobs:
           check-latest: true
           go-version-file: ./go.mod
       - uses: ko-build/setup-ko@v0.6
-      - run: |
+      - env:
+          KO_DOCKER_REPO: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
+          KO_USER: ${{ github.actor }}
+          KO_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           export VERSION=v0.0.0
           echo "${KO_PASSWORD}" | ko login ghcr.io --username "$KO_USER" --password-stdin
           ko build -v -B --sbom=none --tags=latest --tags=${VERSION} --image-refs .digest ./
@@ -53,11 +53,8 @@ jobs:
           digest4=$(sed '5q;d' .digest | cut -d'@' -f2)
           digest5=$(sed '6q;d' .digest | cut -d'@' -f2)
 
-          # Output the image name and digest so we can generate provenance.
-          # image=$(echo "${image_and_digest}" | cut -d'@' -f1)
-          # digest=$(echo "${image_and_digest}" | cut -d'@' -f2)
-          
           echo "image=$image" 
+          echo "digest=$digest"
           echo "digest1=$digest1"
           echo "digest2=$digest2"
           echo "digest3=$digest3"
