@@ -22,14 +22,3 @@ jobs:
           check-latest: true
           go-version-file: ./go.mod
       - run: go run ./...
-
-      # Running docker example.
-      # Docker is available on linux and windows by default.
-      # But not on macos.
-      - name: Setup docker (missing on MacOS)
-        if: runner.os == 'macos'
-        run: |
-          brew install docker
-          colima start
-      - name: Docker run
-        run: docker run --rm hello-world
