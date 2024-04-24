@@ -1,0 +1,21 @@
+version: 1
+
+goos: linux
+goarch: ppc64le
+
+main: ./
+binary: hello-{{ .Os }}-{{ .Arch }}
+
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+
+flags:
+  - -trimpath
+  - -tags=netgo
+
+ldflags:
+  - "-w"
+  - "-s"
+  - "-extldflags \"-static\""
+  - "-X main.version={{ .Env.VERSION }}"
