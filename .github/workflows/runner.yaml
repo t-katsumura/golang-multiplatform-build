@@ -33,5 +33,5 @@ jobs:
           colima start
       - name: Docker run
         run: |
-          ps -aux | grep sock
+          ps aux | grep sock
           docker run --rm hello-world
