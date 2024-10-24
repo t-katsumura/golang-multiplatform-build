@@ -4,5 +4,5 @@ import "runtime"
 
 func main() {
 	println("GOOS :", runtime.GOOS)
-	println("GOARCG :", runtime.GOARCH)
+	println("GOARCH :", runtime.GOARCH)
 }
