@@ -1,15 +1,14 @@
 version: 1
 
-goos: freebsd
+goos: linux
 goarch: arm
 
 main: ./
-binary: hello-{{ .Os }}-{{ .Arch }}7
+binary: hello-{{ .Os }}-{{ .Arch }}
 
 env:
   - GO111MODULE=on
   - CGO_ENABLED=0
-  - GOARM=7
 
 flags:
   - -trimpath

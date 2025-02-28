@@ -4,12 +4,12 @@ goos: freebsd
 goarch: arm
 
 main: ./
-binary: hello-{{ .Os }}-{{ .Arch }}7
+binary: hello-{{ .Os }}-{{ .Arch }}5
 
 env:
   - GO111MODULE=on
   - CGO_ENABLED=0
-  - GOARM=7
+  - GOARM=5
 
 flags:
   - -trimpath

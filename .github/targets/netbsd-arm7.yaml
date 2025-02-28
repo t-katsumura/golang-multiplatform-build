@@ -1,6 +1,6 @@
 version: 1
 
-goos: freebsd
+goos: netbsd
 goarch: arm
 
 main: ./
