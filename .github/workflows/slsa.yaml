@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   build:
-    uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v1.10.0
+    uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v2.1.0
     strategy:
       matrix:
         os:
@@ -53,5 +53,5 @@ jobs:
     # builder_go_slsa3.yml@v1.10.0 uses upload-artifact@v3
     # So, we have to use v3 to download artifact.
     # See https://github.com/slsa-framework/slsa-github-generator/blob/main/internal/builders/go/README.md
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
     - run: ls -R
