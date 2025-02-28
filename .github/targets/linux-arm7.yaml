@@ -1,7 +1,8 @@
 version: 1
 
-goos: freebsd
+goos: linux
 goarch: arm
+goarm: 7
 
 main: ./
 binary: hello-{{ .Os }}-{{ .Arch }}
