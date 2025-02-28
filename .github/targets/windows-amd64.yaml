@@ -7,7 +7,6 @@ main: ./
 binary: hello-{{ .Os }}-{{ .Arch }}.exe
 
 env:
-  - GO111MODULE=on
   - CGO_ENABLED=0
 
 flags:
